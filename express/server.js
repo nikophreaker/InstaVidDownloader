@@ -46,9 +46,7 @@ app.use('/.netlify/functions/server/action', router);
 app.use('/.netlify/functions/server', (req, res) => res.sendFile(__dirname + '/index.html'));
 
 module.exports = app;
-module.exports.handler = async (event, context) => {
-    serverless(app);
-};
+module.exports.handler = serverless(app);
 // app.listen(PORT, () => {
 //     console.log(`Listen to Port: ${PORT}`);
 // });

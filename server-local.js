@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(express.json());
-app.post("/action", async (req, res) => {
+app.post("/action", (req, res) => {
     // console.log(req);
     console.log(phantomJsPath);
     console.log(req.body.url);
