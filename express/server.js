@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 8080;
 // });
 
 // app.use(bodyParser.json());
-router.post("/action", async (req, res) => {
+router.post("/action", (req, res) => {
     // console.log(req);
     console.log(phantomJsPath);
     console.log(req.body.url);
