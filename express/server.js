@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 const fs = require("fs");
-const axios = require("axios");
-const cheerio = require("cheerio");
 const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const router = express.Router();
@@ -13,8 +11,9 @@ const childProcess = require("child_process");
 const phantomJsPath = require("phantomjs-prebuilt").path;
 
 const PORT = process.env.PORT || 8080;
-app.use(express.static("./"));
-app.get("/", (req, res) => {
+
+// app.use(express.static("./"));
+router.get("/", (req, res) => {
     res.sendFile(__dirname + "index.html");
 });
 
