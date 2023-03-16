@@ -3,9 +3,7 @@ const app = express();
 const fs = require("fs");
 const axios = require("axios");
 const cheerio = require("cheerio");
-const serverless = require('serverless-http');
-const bodyParser = require('body-parser');
-const router = express.Router();
+
 const path = require("path");
 const childProcess = require("child_process");
 
@@ -18,8 +16,8 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "index.html");
 });
 
-// app.use(bodyParser.json());
-router.post("/action", async (req, res) => {
+app.use(express.json());
+app.post("/action", async (req, res) => {
     // console.log(req);
     console.log(phantomJsPath);
     console.log(req.body.url);
@@ -41,15 +39,9 @@ router.post("/action", async (req, res) => {
     });
 });
 
-app.use(bodyParser.json());
-app.use('/.netlify/functions/server', router); // path must route to lambda
-app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
-
-module.exports = app;
-module.exports.handler = serverless(app);
-// app.listen(PORT, () => {
-//     console.log(`Listen to Port: ${PORT}`);
-// });
+app.listen(PORT, () => {
+    console.log(`Listen to Port: ${PORT}`);
+});
 
 function fetch(url, reject, resolve) {
     // execute phantom-script.js file via PhantomJS
