@@ -13,9 +13,9 @@ const phantomJsPath = require("phantomjs-prebuilt").path;
 const PORT = process.env.PORT || 8080;
 
 // app.use(express.static("./"));
-router.get("/", (req, res) => {
-    res.sendFile(__dirname + "index.html");
-});
+// router.get("/", (req, res) => {
+//     res.sendFile(__dirname + '/.netlify/functions/server/index.html');
+// });
 
 // app.use(bodyParser.json());
 router.post("/action", async (req, res) => {
@@ -42,8 +42,8 @@ router.post("/action", async (req, res) => {
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router); // path must route to lambda
-app.use(`/.netlify/functions/server/action`, router);
-app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+app.use('/.netlify/functions/server/action', router);
+app.use('/.netlify/functions/server', (req, res) => res.sendFile(__dirname + '/index.html'));
 
 module.exports = app;
 module.exports.handler = serverless(app);
