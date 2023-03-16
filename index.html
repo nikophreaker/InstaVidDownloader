@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Downloader</title>
+</head>
+<body>
+    <h1>HALLO BANG</h1>
+    <form id="data">
+        <input id="urls" type="text" placeholder="Input URL Here..."/>
+        <button type="submit"></button>
+    </form>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+<script>
+    const urls = document.getElementById("urls");
+    const form = document.getElementById("data");
+    form.addEventListener("submit", (element) => {
+        element.preventDefault();
+        console.log(urls.value);
+        axios.post('/action', {
+            url: urls.value
+        }, {
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    });
+</script>
+</html>
