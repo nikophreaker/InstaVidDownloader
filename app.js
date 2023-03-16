@@ -10,7 +10,7 @@ const childProcess = require("child_process");
 // path to PhantomJS bin
 const phantomJsPath = require("phantomjs-prebuilt").path;
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 app.use(express.static("./"));
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "index.html");
