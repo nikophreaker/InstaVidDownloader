@@ -42,6 +42,7 @@ router.post("/action", async (req, res) => {
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router); // path must route to lambda
+app.use(`/.netlify/functions/server/action`, router);
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 module.exports = app;
