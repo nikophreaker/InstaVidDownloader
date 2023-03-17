@@ -13,12 +13,12 @@ const phantomJsPath = require("phantomjs-prebuilt").path;
 const PORT = process.env.PORT || 8080;
 
 // app.use(express.static("./"));
-// router.get("/", (req, res) => {
-//     res.sendFile(__dirname + '/.netlify/functions/server/index.html');
-// });
+router.get("/", (req, res) => {
+    res.sendFile(__dirname + 'index.html');
+});
 
 // app.use(bodyParser.json());
-router.post("/action", (req, res) => {
+router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(phantomJsPath);
     console.log(req.body.url);
@@ -27,25 +27,25 @@ router.post("/action", (req, res) => {
     }, (success) => {
         var contentUrl = success.substring(success.indexOf('https:\\/\\/video.cdninstagram.com'), success.indexOf('","thumbnailUrl"')).replaceAll("\\", "").replaceAll("u0025", "%");
         res.send(contentUrl);
-        fs.writeFile("html.txt", contentUrl, (err) => {
-            if (err)
-                console.log(err);
-            else {
-                console.log("File written successfully\n");
-                // console.log("The written has the following contents:");
-                // console.log(fs.readFileSync("html.txt", "utf8"));
-            }
-        });
+        // fs.writeFile("html.txt", contentUrl, (err) => {
+        //     if (err)
+        //         console.log(err);
+        //     else {
+        //         console.log("File written successfully\n");
+        //         // console.log("The written has the following contents:");
+        //         // console.log(fs.readFileSync("html.txt", "utf8"));
+        //     }
+        // });
         console.log(contentUrl);
     });
 });
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router); // path must route to lambda
-app.use('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+// app.use('/', (req, res) => res.sendFile(__dirname + './index.html'));
 
-module.exports = app;
-module.exports.handler = serverless(app);
+// exports = app;
+exports.handler = serverless(app);
 // app.listen(PORT, () => {
 //     console.log(`Listen to Port: ${PORT}`);
 // });
@@ -65,7 +65,6 @@ function fetch(url, reject, resolve) {
     //     },
     //     maxBuffer: 2048 * 1024
     // });
-    console.log(childArgs);
     let stdout = "";
     let stderr = "";
 

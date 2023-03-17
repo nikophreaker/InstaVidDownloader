@@ -6,10 +6,10 @@ page.settings.userAgent =
     "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36";
 
 // default viewport size is small, change it to 1366x768
-page.viewportSize = {
-    width: 1366,
-    height: 768
-};
+// page.viewportSize = {
+//     width: 1366,
+//     height: 768
+// };
 
 
 //speedUp
