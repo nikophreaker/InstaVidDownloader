@@ -29,6 +29,10 @@ router.get("/test", (req, res) => {
 router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
+    return {
+        statusCode: 200,
+        body: "Hello, World"
+    };
     // res.send(phantomJsPath);
     await fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
