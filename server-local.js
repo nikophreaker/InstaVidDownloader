@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const fs = require("fs");
-const axios = require("axios");
-const cheerio = require("cheerio");
+// const axios = require("axios");
+// const cheerio = require("cheerio");
 
 const path = require("path");
 const childProcess = require("child_process");
@@ -19,12 +19,13 @@ app.get("/", (req, res) => {
 app.use(express.json());
 app.post("/action", (req, res) => {
     // console.log(req);
-    console.log(phantomJsPath);
     console.log(req.body.url);
     fetch(req.body.url, (err) => {
         console.log(err);
     }, (success) => {
-        var contentUrl = success.substring(success.indexOf('https:\\/\\/video.cdninstagram.com'), success.indexOf('","thumbnailUrl"')).replaceAll("\\", "").replaceAll("u0025", "%");
+        var succesToJSON = JSON.parse(success);
+        console.log(succesToJSON.video[0].contentUrl);
+        var contentUrl = succesToJSON.video[0].contentUrl;
         res.send(contentUrl);
         fs.writeFile("html.txt", contentUrl, (err) => {
             if (err)
@@ -35,7 +36,16 @@ app.post("/action", (req, res) => {
                 // console.log(fs.readFileSync("html.txt", "utf8"));
             }
         });
-        console.log(contentUrl);
+
+        fs.writeFile("full.json", success, (err) => {
+            if (err)
+                console.log(err);
+            else {
+                console.log("File written successfully2\n");
+                // console.log("The written has the following contents:");
+                // console.log(fs.readFileSync("html.txt", "utf8"));
+            }
+        });
     });
 });
 
@@ -58,9 +68,9 @@ function fetch(url, reject, resolve) {
     //     },
     //     maxBuffer: 2048 * 1024
     // });
-    console.log(childArgs);
     let stdout = "";
     let stderr = "";
+    console.log(phantomJsPath);
 
     // data comes gradually, bit by bit
     phantom.stdout.on("data", function (chunk) {

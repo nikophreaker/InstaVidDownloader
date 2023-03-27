@@ -61,16 +61,17 @@ page.open(env.URL, function (status) {
             if (readyState == "complete") {
                 waitFor(function () {
                     var result = page.evaluate(function () {
-                        return document.documentElement.outerHTML;
-                        const tagVid = document.getElementsByTagName("video");
-                        var arrSrc = []
-                        for (var i = 0; i < tagVid.length; i++) {
-                            console.log(src.item(i).src)
-                            arrSrc.push({
-                                url: tagVid.item(i).src
-                            });
-                        }
-                        return tagVid.item
+                        var scriptTag = document.getElementsByTagName("script")[0].innerHTML;
+                        return scriptTag;
+                        // const tagVid = document.getElementsByTagName("script");
+                        // var arrSrc = []
+                        // for (var i = 0; i < tagVid.length; i++) {
+                        //     console.log(src.item(i))
+                        //     arrSrc.push({
+                        //         url: tagVid.item(i)
+                        //     });
+                        // }
+                        // return arrSrc
                     });
 
                     // exit and return HTML

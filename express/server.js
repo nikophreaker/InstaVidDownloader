@@ -14,29 +14,40 @@ const PORT = process.env.PORT || 8080;
 
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
-    res.sendFile(__dirname + 'index.html');
+    // res.sendFile(__dirname + '../index.html');
+    res.send("<p>Connected</p>");
 });
 
 // app.use(bodyParser.json());
 router.post("/action", async (req, res) => {
     // console.log(req);
-    console.log(phantomJsPath);
     console.log(req.body.url);
     fetch(req.body.url, (err) => {
         console.log(err);
     }, (success) => {
-        var contentUrl = success.substring(success.indexOf('https:\\/\\/video.cdninstagram.com'), success.indexOf('","thumbnailUrl"')).replaceAll("\\", "").replaceAll("u0025", "%");
+        var succesToJSON = JSON.parse(success);
+        console.log(succesToJSON.video[0].contentUrl);
+        var contentUrl = succesToJSON.video[0].contentUrl;
         res.send(contentUrl);
-        // fs.writeFile("html.txt", contentUrl, (err) => {
-        //     if (err)
-        //         console.log(err);
-        //     else {
-        //         console.log("File written successfully\n");
-        //         // console.log("The written has the following contents:");
-        //         // console.log(fs.readFileSync("html.txt", "utf8"));
-        //     }
-        // });
-        console.log(contentUrl);
+        fs.writeFile("html.txt", contentUrl, (err) => {
+            if (err)
+                console.log(err);
+            else {
+                console.log("File written successfully\n");
+                // console.log("The written has the following contents:");
+                // console.log(fs.readFileSync("html.txt", "utf8"));
+            }
+        });
+
+        fs.writeFile("full.json", success, (err) => {
+            if (err)
+                console.log(err);
+            else {
+                console.log("File written successfully2\n");
+                // console.log("The written has the following contents:");
+                // console.log(fs.readFileSync("html.txt", "utf8"));
+            }
+        });
     });
 });
 
@@ -53,7 +64,7 @@ exports.handler = serverless(app);
 function fetch(url, reject, resolve) {
     // execute phantom-script.js file via PhantomJS
     const childArgs = [path.join(__dirname, "phantom-script.js")];
-    const phantom = childProcess.execFile(phantomJsPath, childArgs, {
+    const phantom = childProcess.execFile("//.netlify//functions//server//node_modules//phantomjs-prebuilt//lib//phantom//bin//phantomjs.exe", childArgs, {
         env: {
             URL: url
         },
