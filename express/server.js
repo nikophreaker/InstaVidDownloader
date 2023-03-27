@@ -23,36 +23,38 @@ router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     fetch(req.body.url, (err) => {
-        console.log(err);
+        console.log(`FetchErr: ${err}`);
     }, (success) => {
         var succesToJSON = JSON.parse(success);
         console.log(succesToJSON.video[0].contentUrl);
         var contentUrl = succesToJSON.video[0].contentUrl;
         res.send(contentUrl);
-        fs.writeFile("html.txt", contentUrl, (err) => {
-            if (err)
-                console.log(err);
-            else {
-                console.log("File written successfully\n");
-                // console.log("The written has the following contents:");
-                // console.log(fs.readFileSync("html.txt", "utf8"));
-            }
-        });
+        // fs.writeFile("html.txt", contentUrl, (err) => {
+        //     if (err)
+        //         console.log(err);
+        //     else {
+        //         console.log("File written successfully\n");
+        //         // console.log("The written has the following contents:");
+        //         // console.log(fs.readFileSync("html.txt", "utf8"));
+        //     }
+        // });
 
-        fs.writeFile("full.json", success, (err) => {
-            if (err)
-                console.log(err);
-            else {
-                console.log("File written successfully2\n");
-                // console.log("The written has the following contents:");
-                // console.log(fs.readFileSync("html.txt", "utf8"));
-            }
-        });
+        // fs.writeFile("full.json", success, (err) => {
+        //     if (err)
+        //         console.log(err);
+        //     else {
+        //         console.log("File written successfully2\n");
+        //         // console.log("The written has the following contents:");
+        //         // console.log(fs.readFileSync("html.txt", "utf8"));
+        //     }
+        // });
     });
 });
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router); // path must route to lambda
+app.use('/.netlify/functions/server/action', router); // path must route to lambda
+app.use('/.netlify/functions/action', router); // path must route to lambda
 // app.use('/', (req, res) => res.sendFile(__dirname + './index.html'));
 
 // exports = app;
