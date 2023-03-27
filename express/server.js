@@ -18,9 +18,13 @@ router.get("/", (req, res) => {
     res.sendFile(__dirname + '../index.html');
     // res.send("<p>Connected</p>");
 });
+router.get("/test", (req, res) => {
+    // res.sendFile(__dirname + '../index.html');
+    res.send("<p>Connected</p>");
+});
 
 // app.use(bodyParser.json());
-app.post("/action", async (req, res) => {
+router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     fetch(req.body.url, (err) => {
