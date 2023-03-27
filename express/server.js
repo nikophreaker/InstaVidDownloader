@@ -8,11 +8,12 @@ const path = require("path");
 const childProcess = require("child_process");
 
 // path to PhantomJS bin
-const phantomJsPath = require("phantomjs-prebuilt").path;
+// const phantomJsPath = require("phantomjs-prebuilt").path;
+// const phantomJsPath = require.resolve("phantomjs-prebuilt/phantomjs.exe");
 
 const PORT = process.env.PORT || 8080;
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
     res.sendFile(__dirname + '../index.html');
@@ -72,7 +73,7 @@ exports.handler = serverless(app);
 function fetch(url, reject, resolve) {
     // execute phantom-script.js file via PhantomJS
     const childArgs = [path.join(__dirname, "phantom-script.js")];
-    const phantom = childProcess.execFile("\\node_modules\\phantomjs-prebuilt\\lib\\phantom\\bin\\phantomjs.exe", childArgs, {
+    const phantom = childProcess.execFile("./phantomjs.exe", childArgs, {
         env: {
             URL: url
         },
