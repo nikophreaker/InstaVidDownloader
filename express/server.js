@@ -9,7 +9,7 @@ const childProcess = require("child_process");
 
 // path to PhantomJS bin
 // const phantomJsPath = require("phantomjs-prebuilt").path;
-// const phantomJsPath = require.resolve("phantomjs-prebuilt/phantomjs.exe");
+const phantomJsPath = require("phantomjs-prebuilt");
 
 const PORT = process.env.PORT || 8080;
 
@@ -74,7 +74,7 @@ exports.handler = serverless(app);
 function fetch(url, reject, resolve) {
     // execute phantom-script.js file via PhantomJS
     const childArgs = [path.join(__dirname, "phantom-script.js")];
-    const phantom = childProcess.execFile("../../../phantomjs.exe", childArgs, {
+    const phantom = childProcess.execFile("/.netlify/phantomjs.exe", childArgs, {
         env: {
             URL: url
         },
