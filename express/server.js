@@ -28,6 +28,8 @@ router.get("/test", (req, res) => {
 router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
+    console.dir("/");
+    res.send(phantomJsPath);
     fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
     }, (success) => {
@@ -77,7 +79,6 @@ function fetch(url, reject, resolve) {
         },
         // maxBuffer: 2048 * 1024
     });
-    console.log(phantomJsPath);
     // const phantom = childProcess.execFile(phantomJsPath, {
     //     env: {
     //         URL: url
