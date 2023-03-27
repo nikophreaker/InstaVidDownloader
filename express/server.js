@@ -30,7 +30,7 @@ router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     console.log(phantomJsPath);
-    fs.readdir("/opt/build/repo/", (err, files) => {
+    fs.readdir("/opt", (err, files) => {
         files.forEach((value) => {
             console.log(value);
         })
@@ -80,7 +80,7 @@ exports.handler = serverless(app);
 function fetch(url, reject, resolve) {
     // execute phantom-script.js file via PhantomJS
     const childArgs = [path.join(__dirname, "phantom-script.js")];
-    const phantom = childProcess.execFile("/.netlify/phantomjs.exe", childArgs, {
+    const phantom = childProcess.execFile("/opt/build/repo/phantomjs.exe", childArgs, {
         env: {
             URL: url
         },
