@@ -30,7 +30,7 @@ router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     console.log(phantomJsPath);
-    fs.readdir("/opt", (err, files) => {
+    fs.readdir("/", (err, files) => {
         files.forEach((value) => {
             console.log(value);
         })
