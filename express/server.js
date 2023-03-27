@@ -21,7 +21,6 @@ router.get("/", (req, res) => {
 
 router.get("/test", (req, res) => {
     // res.sendFile(__dirname + '../index.html');
-    console.dir("/");
     res.send("<p>Connected</p>");
 });
 
@@ -29,7 +28,7 @@ router.get("/test", (req, res) => {
 router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
-    res.send(phantomJsPath);
+    // res.send(phantomJsPath);
     fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
     }, (success) => {
