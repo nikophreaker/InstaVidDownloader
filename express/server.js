@@ -9,7 +9,7 @@ const childProcess = require("child_process");
 
 // path to PhantomJS bin
 // const phantomJsPath = require("phantomjs-prebuilt").path;
-const phantomJsPath = require("phantomjs-prebuilt");
+const phantomJsPath = require("phantomjs-prebuilt").path;
 
 const PORT = process.env.PORT || 8080;
 
@@ -29,12 +29,9 @@ router.get("/test", (req, res) => {
 router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
-    return {
-        statusCode: 200,
-        body: "Hello, World"
-    };
+    console.log(phantomJsPath);
     // res.send(phantomJsPath);
-    await fetch(req.body.url, (err) => {
+    fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
         return res.send("<p>Error</p>");
     }, (success) => {
