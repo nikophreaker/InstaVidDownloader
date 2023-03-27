@@ -30,6 +30,8 @@ router.post("/action", (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     console.log(phantomJsPath);
+    console.dir("/.netlify");
+    console.dir("/");
     // res.send(phantomJsPath);
     fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
