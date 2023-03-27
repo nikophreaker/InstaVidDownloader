@@ -32,6 +32,7 @@ router.post("/action", async (req, res) => {
     // res.send(phantomJsPath);
     fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
+        res.send("<p>Error</p>");
     }, (success) => {
         var succesToJSON = JSON.parse(success);
         console.log(succesToJSON.video[0].contentUrl);
