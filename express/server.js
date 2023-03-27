@@ -12,7 +12,7 @@ const phantomJsPath = require("phantomjs-prebuilt").path;
 
 const PORT = process.env.PORT || 8080;
 
-app.use(bodyParser);
+// app.use(bodyParser.json());
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
     res.sendFile(__dirname + '../index.html');
