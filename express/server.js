@@ -30,7 +30,7 @@ router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     // res.send(phantomJsPath);
-    fetch(req.body.url, (err) => {
+    await fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
         return res.send("<p>Error</p>");
     }, (success) => {
