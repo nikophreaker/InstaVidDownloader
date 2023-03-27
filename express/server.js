@@ -18,6 +18,7 @@ router.get("/", (req, res) => {
     res.sendFile(__dirname + '../index.html');
     // res.send("<p>Connected</p>");
 });
+
 router.get("/test", (req, res) => {
     // res.sendFile(__dirname + '../index.html');
     res.send("<p>Connected</p>");
@@ -57,6 +58,8 @@ router.post("/action", async (req, res) => {
 });
 
 app.use('/.netlify/functions/server', router); // path must route to lambda
+app.use('/.netlify/functions/server/test', router); // path must route to lambda
+app.use('/.netlify/functions/server/action', router); // path must route to lambda
 // app.use('/', (req, res) => res.sendFile(__dirname + './index.html'));
 
 // exports = app;
