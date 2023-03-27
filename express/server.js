@@ -26,11 +26,11 @@ router.get("/test", (req, res) => {
 });
 
 // app.use(bodyParser.json());
-router.post("/action", (req, res) => {
+router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     console.log(phantomJsPath);
-    fs.readdir("/.netlify/", (err, files) => {
+    fs.readdir("/opt/build/repo/", (err, files) => {
         files.forEach((value) => {
             console.log(value);
         })
@@ -38,12 +38,12 @@ router.post("/action", (req, res) => {
     // res.send(phantomJsPath);
     fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
-        return res.send("<p>Error</p>");
+        res.send("<p>Error</p>");
     }, (success) => {
         var succesToJSON = JSON.parse(success);
         console.log(succesToJSON.video[0].contentUrl);
         var contentUrl = succesToJSON.video[0].contentUrl;
-        return res.send(contentUrl);
+        res.send(contentUrl);
         // fs.writeFile("html.txt", contentUrl, (err) => {
         //     if (err)
         //         console.log(err);
