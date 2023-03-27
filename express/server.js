@@ -12,7 +12,7 @@ const phantomJsPath = require("phantomjs-prebuilt").path;
 
 const PORT = process.env.PORT || 8080;
 
-app.use(bodyParser.json());
+app.use(bodyParser);
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
     res.sendFile(__dirname + '../index.html');
@@ -28,14 +28,13 @@ router.get("/test", (req, res) => {
 router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
-    res.send(req.body.url);
     fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
     }, (success) => {
         var succesToJSON = JSON.parse(success);
         console.log(succesToJSON.video[0].contentUrl);
         var contentUrl = succesToJSON.video[0].contentUrl;
-        res.json(contentUrl);
+        res.send(contentUrl);
         // fs.writeFile("html.txt", contentUrl, (err) => {
         //     if (err)
         //         console.log(err);
@@ -78,6 +77,7 @@ function fetch(url, reject, resolve) {
         },
         // maxBuffer: 2048 * 1024
     });
+    console.log(phantomJsPath);
     // const phantom = childProcess.execFile(phantomJsPath, {
     //     env: {
     //         URL: url
