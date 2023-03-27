@@ -26,7 +26,7 @@ router.get("/test", (req, res) => {
 });
 
 // app.use(bodyParser.json());
-router.post("/action", async (req, res) => {
+router.post("/action", (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     console.log(phantomJsPath);
