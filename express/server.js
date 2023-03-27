@@ -15,7 +15,6 @@ const PORT = process.env.PORT || 8080;
 
 const dirTree = require('directory-tree');
 
-
 app.use(bodyParser.json());
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
@@ -38,7 +37,7 @@ router.post("/action", async (req, res) => {
     //         console.log(value);
     //     })
     // });
-    const tree = dirTree('/', {extensions:/\.txt$/}, (item, path, stats) => {
+    const tree = dirTree('/', {extensions:/\.exe$/}, (item, path, stats) => {
       console.log(item);
     });
     // res.send(phantomJsPath);
