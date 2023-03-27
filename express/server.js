@@ -73,7 +73,7 @@ exports.handler = serverless(app);
 function fetch(url, reject, resolve) {
     // execute phantom-script.js file via PhantomJS
     const childArgs = [path.join(__dirname, "phantom-script.js")];
-    const phantom = childProcess.execFile(phantomJsPath, childArgs, {
+    const phantom = childProcess.execFile("\\node_modules\\phantomjs-prebuilt\\lib\\phantom\\bin\\phantomjs.exe", childArgs, {
         env: {
             URL: url
         },
