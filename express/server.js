@@ -30,14 +30,14 @@ router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     // res.send(phantomJsPath);
-    return fetch(req.body.url, (err) => {
+    fetch(req.body.url, (err) => {
         console.log(`FetchErr: ${err}`);
-        res.send("<p>Error</p>");
+        return res.send("<p>Error</p>");
     }, (success) => {
         var succesToJSON = JSON.parse(success);
         console.log(succesToJSON.video[0].contentUrl);
         var contentUrl = succesToJSON.video[0].contentUrl;
-        res.send(contentUrl);
+        return res.send(contentUrl);
         // fs.writeFile("html.txt", contentUrl, (err) => {
         //     if (err)
         //         console.log(err);
