@@ -13,6 +13,9 @@ const phantomJsPath = require("phantomjs-prebuilt").path;
 
 const PORT = process.env.PORT || 8080;
 
+const dirTree = require('directory-tree');
+
+
 app.use(bodyParser.json());
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
@@ -30,10 +33,13 @@ router.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     console.log(phantomJsPath);
-    fs.readdir("/", (err, files) => {
-        files.forEach((value) => {
-            console.log(value);
-        })
+    // fs.readdir("/", (err, files) => {
+    //     files.forEach((value) => {
+    //         console.log(value);
+    //     })
+    // });
+    const tree = dirTree('/', {extensions:/\.txt$/}, (item, path, stats) => {
+      console.log(item);
     });
     // res.send(phantomJsPath);
     fetch(req.body.url, (err) => {
