@@ -12,6 +12,7 @@ const phantomJsPath = require("phantomjs-prebuilt").path;
 
 const PORT = process.env.PORT || 8080;
 
+app.use(bodyParser.json());
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
     res.sendFile(__dirname + '../index.html');
@@ -19,7 +20,7 @@ router.get("/", (req, res) => {
 });
 
 // app.use(bodyParser.json());
-router.post("/action", async (req, res) => {
+app.post("/action", async (req, res) => {
     // console.log(req);
     console.log(req.body.url);
     fetch(req.body.url, (err) => {
@@ -28,7 +29,7 @@ router.post("/action", async (req, res) => {
         var succesToJSON = JSON.parse(success);
         console.log(succesToJSON.video[0].contentUrl);
         var contentUrl = succesToJSON.video[0].contentUrl;
-        res.send(contentUrl);
+        res.json(contentUrl);
         // fs.writeFile("html.txt", contentUrl, (err) => {
         //     if (err)
         //         console.log(err);
@@ -51,10 +52,7 @@ router.post("/action", async (req, res) => {
     });
 });
 
-app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router); // path must route to lambda
-app.use('/.netlify/functions/server/action', router); // path must route to lambda
-app.use('/.netlify/functions/action', router); // path must route to lambda
 // app.use('/', (req, res) => res.sendFile(__dirname + './index.html'));
 
 // exports = app;
