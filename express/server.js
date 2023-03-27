@@ -37,7 +37,7 @@ router.post("/action", async (req, res) => {
     //         console.log(value);
     //     })
     // });
-    const tree = dirTree('/',null, null,(item, path, stats) => {
+    const tree = dirTree('/opt',null, null,(item, path, stats) => {
       console.log(item);
     });
     // res.send(phantomJsPath);
