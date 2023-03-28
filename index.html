@@ -29,8 +29,12 @@
             url: urls.value
         })
         .then(function (response) {
-            location.href = response.video[0].contentUrl;
-            // console.log(response);
+            if (response != undefined) {
+                if (response.video != undefined) {
+                    location.href = response.video[0].contentUrl;
+                }
+            }
+            console.log(response);
         })
         .catch(function (error) {
             console.log(error);
