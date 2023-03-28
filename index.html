@@ -15,7 +15,7 @@
     <p>MASUKKIN LINK KE BAWAH TRUS PENCET TOMBOL SEBELAHNYA</p>
     <form id="data">
         <input id="urls" type="text" placeholder="Input URL Here..."/>
-        <input type="submit" value="DOWNLOAD"/>
+        <input type="submit" value="GET"/>
     </form>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
@@ -29,11 +29,12 @@
             url: urls.value
         })
         .then(function (response) {
-            if (response != undefined) {
-                if (response.video != undefined) {
-                    location.href = response.video[0].contentUrl;
-                }
-            }
+            const downloadBtn = document.createElement("a");
+            downloadBtn.setAttribute("href", response.video[0].contentUrl);
+            downloadBtn.setAttribute('download', '');
+            const node = document.createTextNode("DOWNLOAD HERE");
+            downloadBtn.appendChild(node);
+            form.appendChild(downloadBtn);
             console.log(response);
         })
         .catch(function (error) {
