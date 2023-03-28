@@ -27,11 +27,7 @@
         element.preventDefault();
         console.log(urls.value);
         axios.post('/.netlify/functions/server/action', {
-            "url": urls.value
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            url: urls.value
         })
         .then(function (response) {
             const data = response;
