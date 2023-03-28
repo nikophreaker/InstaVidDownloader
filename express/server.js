@@ -5,9 +5,9 @@ const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const router = express.Router();
 const path = require("path");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 const childProcess = require("child_process");
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 // path to PhantomJS bin
 // const phantomJsPath = require("phantomjs-prebuilt").path;
 // const phantomJsPath = require("phantomjs-prebuilt").path;
@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 8080;
 app.use(bodyParser.json());
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
-    res.sendFile(__dirname + 'index.html');
+    res.sendFile(__dirname + '../index.html');
     // res.send("<p>Connected</p>");
 });
 
@@ -34,6 +34,7 @@ router.post("/action", async (req, res) => {
           puppeteer.connect({ browserWSEndpoint: 'wss://chrome.browserless.io?token=24715a4d-0f38-40f7-89c0-b3ba2c3bf55c' })
         : // Run the browser locally while in development
           puppeteer.launch();
+    // const getBrowser = () => puppeteer.connect({ browserWSEndpoint: 'wss://chrome.browserless.io?token=24715a4d-0f38-40f7-89c0-b3ba2c3bf55c' })
     
     console.log(req.body.url);
     let browser = null
@@ -42,9 +43,11 @@ router.post("/action", async (req, res) => {
         const page = await browser.newPage();
 
         await page.goto(req.body.url);
+        const scriptTag = await page.evaluate(() => document.getElementsByTagName("script")[0].innerHTML);
         const screenshot = await page.screenshot();
-
-        res.end(screenshot, "binary");
+        var succesToJSON = JSON.parse(scriptTag);
+        res.send(succesToJSON);
+        // res.end(screenshot, "binary");
     } catch (err) {
         if (!res.headersSent) {
             res.status(400).send(err.message)
