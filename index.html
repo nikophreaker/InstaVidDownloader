@@ -30,12 +30,11 @@
         })
         .then(function (response) {
             const downloadBtn = document.createElement("a");
-            downloadBtn.setAttribute("href", response.video[0].contentUrl);
+            downloadBtn.setAttribute("href", response.data.video[0].contentUrl);
             downloadBtn.setAttribute('download', '');
             const node = document.createTextNode("DOWNLOAD HERE");
             downloadBtn.appendChild(node);
             form.appendChild(downloadBtn);
-            console.log(response);
         })
         .catch(function (error) {
             console.log(error);
