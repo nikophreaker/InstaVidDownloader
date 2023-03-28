@@ -11,17 +11,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Downloader</title>
 </head>
+<style>
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+    }
+    
+    /* Safari */
+    @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    </style>
 <body>
     <p>MASUKKIN LINK KE BAWAH TRUS PENCET TOMBOL SEBELAHNYA</p>
     <form id="data">
         <input id="urls" type="text" placeholder="Input URL Here..."/>
         <input type="submit" value="GET"/>
     </form>
+    <div id="loader" class="loader" hidden></div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
 <script type="text/javascript">
     const urls = document.getElementById("urls");
     const form = document.getElementById("data");
+    const loader = document.getElementById("loader");
+    loader.removeAttribute("hidden");
     form.addEventListener("submit", async (element) => {
         element.preventDefault();
         console.log(urls.value);
@@ -40,6 +65,7 @@
             const node = document.createTextNode("DOWNLOAD HERE");
             downloadBtn.appendChild(node);
             form.appendChild(downloadBtn);
+            loader.setAttribute("hidden","");
         })
         .catch(function (error) {
             console.log(error);
