@@ -46,8 +46,8 @@
     const urls = document.getElementById("urls");
     const form = document.getElementById("data");
     const loader = document.getElementById("loader");
-    loader.removeAttribute("hidden");
     form.addEventListener("submit", async (element) => {
+        loader.removeAttribute("hidden");
         element.preventDefault();
         console.log(urls.value);
         await axios.post('https://hilarious-klepon-7e1b58.netlify.app/.netlify/functions/server/action', {
