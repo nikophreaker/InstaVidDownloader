@@ -30,8 +30,7 @@
             url: urls.value
         })
         .then(function (response) {
-            const data = response;
-            location.href = data.video[0].contentUrl;
+            // location.href = response.video[0].contentUrl;
             console.log(response);
         })
         .catch(function (error) {
