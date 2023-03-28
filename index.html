@@ -29,9 +29,14 @@
             url: urls.value
         })
         .then(function (response) {
+            if (document.getElementById("downloads") != undefined) {
+                document.getElementById("downloads").remove();
+            }
             const downloadBtn = document.createElement("a");
+            downloadBtn.setAttribute("id", "downloads");
             downloadBtn.setAttribute("href", response.data.video[0].contentUrl);
             downloadBtn.setAttribute('download', '');
+            downloadBtn.setAttribute('target', '_blank');
             const node = document.createTextNode("DOWNLOAD HERE");
             downloadBtn.appendChild(node);
             form.appendChild(downloadBtn);
