@@ -12,12 +12,11 @@
     <title>Instagram Downloader</title>
 </head>
 <body>
-    <h1>HALLO BANG</h1>
+    <p>MASUKKIN LINK KE BAWAH TRUS PENCET TOMBOL SEBELAHNYA</p>
     <form id="data">
         <input id="urls" type="text" placeholder="Input URL Here..."/>
-        <button type="submit"></button>
+        <input type="submit" value="DOWNLOAD"/>
     </form>
-    <button type="button"></button>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
 <script type="text/javascript">
@@ -30,8 +29,8 @@
             url: urls.value
         })
         .then(function (response) {
-            // location.href = response.video[0].contentUrl;
-            console.log(response);
+            location.href = response.video[0].contentUrl;
+            // console.log(response);
         })
         .catch(function (error) {
             console.log(error);
