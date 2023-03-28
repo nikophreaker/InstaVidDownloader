@@ -15,6 +15,7 @@ const IS_PRODUCTION = true;
 const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
+app.use(bodyParser.raw()); 
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
     res.sendFile(__dirname + '../index.html');

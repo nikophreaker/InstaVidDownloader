@@ -26,9 +26,9 @@
     form.addEventListener("submit", (element) => {
         element.preventDefault();
         console.log(urls.value);
-        axios.post('/.netlify/functions/server/action', JSON.strinfify({
-            url: urls.value
-        }), {
+        axios.post('/.netlify/functions/server/action', {
+            "url": urls.value
+        }, {
             headers: {
                 'Content-Type': 'application/json'
             }
