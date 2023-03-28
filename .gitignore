@@ -132,3 +132,5 @@ dist
 # other
 ./html.txt
 functions
+# Local Netlify folder
+.netlify

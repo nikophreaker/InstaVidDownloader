@@ -70,7 +70,6 @@ function fetch(url, reject, resolve) {
     // });
     let stdout = "";
     let stderr = "";
-    console.log(phantomJsPath);
 
     // data comes gradually, bit by bit
     phantom.stdout.on("data", function (chunk) {

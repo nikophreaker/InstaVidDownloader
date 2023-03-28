@@ -5,20 +5,19 @@ const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const router = express.Router();
 const path = require("path");
+const puppeteer = require("puppeteer");
 const childProcess = require("child_process");
-
+const IS_PRODUCTION = false;
 // path to PhantomJS bin
 // const phantomJsPath = require("phantomjs-prebuilt").path;
-const phantomJsPath = require("phantomjs-prebuilt").path;
+// const phantomJsPath = require("phantomjs-prebuilt").path;
 
 const PORT = process.env.PORT || 8080;
-
-const dirTree = require('directory-tree');
 
 app.use(bodyParser.json());
 // app.use(express.static("./"));
 router.get("/", (req, res) => {
-    res.sendFile(__dirname + '../index.html');
+    res.sendFile(__dirname + 'index.html');
     // res.send("<p>Connected</p>");
 });
 
@@ -29,26 +28,41 @@ router.get("/test", (req, res) => {
 
 // app.use(bodyParser.json());
 router.post("/action", async (req, res) => {
-    // console.log(req);
+    const getBrowser = () =>
+      IS_PRODUCTION
+        ? // Connect to browserless so we don't run Chrome on the same hardware in production
+          puppeteer.connect({ browserWSEndpoint: 'wss://chrome.browserless.io?token=24715a4d-0f38-40f7-89c0-b3ba2c3bf55c' })
+        : // Run the browser locally while in development
+          puppeteer.launch();
+    
     console.log(req.body.url);
-    console.log(phantomJsPath);
-    // fs.readdir("/", (err, files) => {
-    //     files.forEach((value) => {
-    //         console.log(value);
-    //     })
-    // });
-    const tree = dirTree('/var',null, null,(item, path, stats) => {
-      console.log(item);
-    });
+    let browser = null
+    try {
+        browser = await getBrowser();
+        const page = await browser.newPage();
+
+        await page.goto(req.body.url);
+        const screenshot = await page.screenshot();
+
+        res.end(screenshot, "binary");
+    } catch (err) {
+        if (!res.headersSent) {
+            res.status(400).send(err.message)
+        }
+    } finally {
+        if (browser) {
+            browser.close();
+        }
+    }
     // res.send(phantomJsPath);
-    fetch(req.body.url, (err) => {
-        console.log(`FetchErr: ${err}`);
-        res.send("<p>Error</p>");
-    }, (success) => {
-        var succesToJSON = JSON.parse(success);
-        console.log(succesToJSON.video[0].contentUrl);
-        var contentUrl = succesToJSON.video[0].contentUrl;
-        res.send(contentUrl);
+    // fetch(req.body.url, (err) => {
+    //     console.log(`FetchErr: ${err}`);
+    //     res.send("<p>Error</p>");
+    // }, (success) => {
+    //     var succesToJSON = JSON.parse(success);
+    //     console.log(succesToJSON.video[0].contentUrl);
+    //     var contentUrl = succesToJSON.video[0].contentUrl;
+    //     res.send(contentUrl);
         // fs.writeFile("html.txt", contentUrl, (err) => {
         //     if (err)
         //         console.log(err);
@@ -68,7 +82,7 @@ router.post("/action", async (req, res) => {
         //         // console.log(fs.readFileSync("html.txt", "utf8"));
         //     }
         // });
-    });
+    // });
 });
 
 app.use('/.netlify/functions/server', router); // path must route to lambda
