@@ -68,6 +68,15 @@
             loader.setAttribute("hidden","");
         })
         .catch(function (error) {
+            if (document.getElementById("downloads") != undefined) {
+                document.getElementById("downloads").remove();
+            }
+            const downloadBtn = document.createElement("p");
+            downloadBtn.setAttribute("id", "downloads");
+            const node = document.createTextNode("TRY AGAIN");
+            downloadBtn.appendChild(node);
+            form.appendChild(downloadBtn);
+            loader.setAttribute("hidden","");
             console.log(error);
         });
     });
