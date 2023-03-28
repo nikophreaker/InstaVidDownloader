@@ -22,10 +22,10 @@
 <script type="text/javascript">
     const urls = document.getElementById("urls");
     const form = document.getElementById("data");
-    form.addEventListener("submit", (element) => {
+    form.addEventListener("submit", async (element) => {
         element.preventDefault();
         console.log(urls.value);
-        axios.post('https://hilarious-klepon-7e1b58.netlify.app/.netlify/functions/server/action', {
+        await axios.post('https://hilarious-klepon-7e1b58.netlify.app/.netlify/functions/server/action', {
             url: urls.value
         })
         .then(function (response) {
