@@ -35,7 +35,6 @@ router.post("/action", async (req, res) => {
         : // Run the browser locally while in development
           puppeteer.launch();
     // const getBrowser = () => puppeteer.connect({ browserWSEndpoint: 'wss://chrome.browserless.io?token=24715a4d-0f38-40f7-89c0-b3ba2c3bf55c' })
-    
     console.log(req.body.url);
     let browser = null
     try {
